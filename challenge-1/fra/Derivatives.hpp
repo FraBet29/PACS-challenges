@@ -1,5 +1,5 @@
 /*
- * Code adapted from Derivaatives.hpp in Examples/Derivatives
+ * Code adapted from Derivatives.hpp in Examples/Derivatives
  */
 
 #ifndef DERIVATIVES_HPP
