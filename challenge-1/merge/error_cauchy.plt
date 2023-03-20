@@ -1,6 +1,6 @@
 set grid
 set term jpeg size 1024,768
-set output "ERROR_CONV_RATE.jpg"
+set output "plots/ERROR_CONV_RATE.jpg"
 
 set xtic auto
 set ytic auto
