@@ -1,6 +1,6 @@
 set grid
 set term jpeg size 1024,768
-set output "CAUCHY_SOL.jpg"
+set output "plots/CAUCHY_SOL.jpg"
 
 set xtic auto
 set ytic auto
