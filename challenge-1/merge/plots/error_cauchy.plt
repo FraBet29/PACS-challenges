@@ -10,7 +10,7 @@ set logscale y
 
 set title "Error convergence rate, CN method"
 set xlabel "h"
-set ylabel "error_inf"
+set ylabel "error inf"
 
 
 plot "error_conv.txt" u 1:2 title 'Error' w linespoints lw 4, \
