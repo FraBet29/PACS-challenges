@@ -6,7 +6,8 @@
 
 gnuplot<<EOF
 
-reset
+set encoding utf8
+
 set grid
 set term jpeg size 1024,768
 set output "ERROR_CONV_RATE.jpg"
@@ -23,6 +24,5 @@ set ylabel "error_inf"
 
 
 plot "error_conv.txt" u 1:2 title 'Error' w linespoints lw 4, \
-"error_conv.txt" u 1:($1)**2 title 'h^2' w linespoints lw 3
-pause -1
+"error_conv.txt" u 1:(($1)**2) title 'h^2' w linespoints lw 3
 EOF
