@@ -36,7 +36,7 @@ class cauchySolver {
 		const unsigned int m_N; // number of timesteps
 		const double m_theta; // parameter of the theta method
 		const int m_zero_fun; // method used to find the zeros of the function
-		type_v m_tn; // time intervals
+		type_v m_tn; // time instants
 		type_v m_un; // approximated solution
 		double computeInfError(); // method to compute the infinity norm of the error
 

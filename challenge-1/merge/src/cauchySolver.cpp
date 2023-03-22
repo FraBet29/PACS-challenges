@@ -25,7 +25,7 @@ std::array<type_v, 2> cauchySolver::solve() {
 		// Definition of the functional 
 		std::function<double (double)> F([this, h, n](double x){ return x - h * (m_theta * m_f(m_tn[n] + h, x) + (1 - m_theta) * m_f(m_tn[n], m_un[n])) - m_un[n]; });
 
-		std::tuple<double, bool> result;
+		std::tuple<double, bool> result; // minimizer and convergence status
 
 		if(m_zero_fun == secant) {
 			result = apsc::secant(F, -1, 1, h * h, h * h, 1000);
@@ -52,7 +52,7 @@ std::array<type_v, 2> cauchySolver::solve() {
 
 double cauchySolver::computeInfError() {
 
-	double err{0.0};
+	double err(0.0);
 
 	for(std::size_t n = 1; n < m_N; ++n) {
 		err = std::max(err, std::abs(m_un[n] - m_u_ex(m_tn[n])));
