@@ -1,4 +1,4 @@
 #!/bin/bash
 
-gnuplot>> load "graph_cauchy.plt"
-gnuplot>> load "error_cauchy.plt"
+gnuplot>> load "plots/graph_cauchy.plt"
+gnuplot>> load "plots/error_cauchy.plt"
