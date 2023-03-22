@@ -1,25 +1,32 @@
 CXX = g++
 CXXFLAGS = -std=c++20
 
-CPPFLAGS = -O3 -Wall -Iinclude
+SRC_DIR = src
+INCLUDE_DIR = include
+OBJ_DIR = obj
 
-SRCS = $(wildcard *.cpp)
-OBJS = $(SRCS:.cpp=.o)
+CPPFLAGS = -O3 -Wall -I. -I$(INCLUDE_DIR)
+
+SRCS = $(wildcard $(SRC_DIR)/*.cpp)
+OBJS = $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
+
+TARGET = main
 
 .PHONY = clean distclean
 
 .DEFAULT_GOAL = all
 
-all: main 
+all: $(TARGET) 
 
-main: $(OBJS)
-	$(CXX) $(OBJS) -o main
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(TARGET)
 
-$(OBJS): $(SRCS)
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $(SRCS)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	mkdir -p $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
 clean:
-	$(RM) -f $(OBJS)
+	$(RM) $(OBJS)
 
 distclean: clean
-	$(RM) -f main
+	$(RM) main
