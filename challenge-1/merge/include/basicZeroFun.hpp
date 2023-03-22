@@ -59,7 +59,7 @@ std::tuple<double, bool> secant(Function const &f, double a, double b, double to
  * @param a Initial point
  * @param tol Relative tolerance
  * @param tola Rbsolute tolerance
- * @param maxIt Maximum number of iterations
+ * @param max_it Maximum number of iterations
  * 
  * @return The approximation of the zero of f and the convergence status (false if not converging)
  */
