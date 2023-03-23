@@ -1,4 +1,4 @@
-Cauchy problem solver based on the theta method
+# Cauchy problem solver based on the theta method
 
 Team: Francesca Bettinelli, Massimo Rizzuto
 
