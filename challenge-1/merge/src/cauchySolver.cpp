@@ -28,11 +28,11 @@ std::array<type_v, 2> cauchySolver::solve() {
 		std::tuple<double, bool> result; // minimizer and convergence status
 
 		if(m_zero_fun == secant) {
-			result = apsc::secant(F, -1, 1, h * h, h * h, 1000);
+			result = apsc::secant(F, -1, 1, h*h, h*h, 1000);
 		}
 		else if(m_zero_fun == Newton) {
 			auto dF = apsc::makeCenteredDerivative<1>(F, h);
-			result = apsc::Newton(F, dF, -1, h * h, h * h, 1000);
+			result = apsc::Newton(F, dF, -1, h*h, h*h, 1000);
 		}
 		else {
 			std::cerr << "Invalid zero method name. Execution stopped." << std::endl;
@@ -40,9 +40,9 @@ std::array<type_v, 2> cauchySolver::solve() {
 		}
 
 		if(std::get<1>(result) == false) {
-				std::cerr << "The algorithm has not converged at time " << m_tn[n] << ". Execution stopped." << std::endl;
-				break;
-			}
+			std::cerr << "The algorithm has not converged at time " << m_tn[n] << ". Execution stopped." << std::endl;
+			break;
+		}
 		
 		m_un[n+1] = std::get<0>(result);
 	}
@@ -50,7 +50,7 @@ std::array<type_v, 2> cauchySolver::solve() {
 	return std::array<type_v, 2> {m_tn, m_un};
 }
 
-double cauchySolver::computeInfError() {
+double cauchySolver::computeInfError() const {
 
 	double err(0.0);
 
@@ -68,7 +68,7 @@ double cauchySolver::computeInfError() {
  * 
  * @return The timestep sizes h and the infinity norm of the errors eh
  */
-std::array<type_v, 2> cauchySolver::convergenceCheck(unsigned int n_ref) {
+std::array<type_v, 2> cauchySolver::convergenceCheck(unsigned int n_ref) const {
 
 	type_v N(n_ref); // number of timesteps
 	type_v h(n_ref); // timestep sizes

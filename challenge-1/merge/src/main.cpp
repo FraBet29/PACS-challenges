@@ -3,16 +3,6 @@
 #include <iostream>
 #include <fstream>
 
-// External force
-double force(double t, double y) {
-	return - t * std::exp(-y);
-}
-
-// Exact solution (needed only for the convergence test)
-double solution(double t) {
-	return std::log(1 - 0.5*t*t);
-}
-
 // Write the solution to a .txt file formatted for gnuplot
 void write_solution(type_v hh, type_v sol) {
 
@@ -30,7 +20,7 @@ void write_solution(type_v hh, type_v sol) {
 		
 		fw.close();
     }
-    else std::cout << "Problem with opening file." << std::endl;
+    else std::cerr << "Problem with opening file." << std::endl;
     
 }
 
@@ -51,19 +41,19 @@ void write_error(type_v hh, type_v err) {
 		
 		fw.close();
     }
-    else std::cout << "Problem with opening file";
+    else std::cerr << "Problem with opening file." << std::endl;
 
 }
 
 int main(int argc, char** argv) {
 
-	type_f f(force); // type_f is defined in cauchySolver.hpp (function wrapper)
-	type_u u_ex(solution); // type_u is defined in cauchySolver.hpp (function wrapper)
+	const type_f f([](double t, double y){ return - t * std::exp(-y); }); // force, type_f is defined in cauchySolver.hpp (function wrapper)
+	const type_u u_ex([](double t){ return std::log(1 - 0.5*t*t); }); // exact solution, type_u is defined in cauchySolver.hpp (function wrapper)
 	const double y0 = 0; // initial condition
 	const double T = 1; // final time
 	const double N = 100; // number of timesteps
 	const double theta = 0.5; // parameter of the theta method (0.5 = Crank-Nicolson)
-	int zero_method = Newton; // zero_method is defined in cauchySolver.hpp (enum). Available methods: secant, Newton
+	const int zero_method = Newton; // zero_method is defined in cauchySolver.hpp (enum), available methods: secant, Newton
 
 	const bool conv_check = true; // true to perform a convergence test, false otherwise
 	const unsigned int n_ref = 10; // number of refinements for the convergence test
