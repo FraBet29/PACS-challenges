@@ -6,6 +6,7 @@
 
 struct SolverTraits {
 
+// Available solvers
 enum class SolverType
 {
     QuasiNewton,
@@ -13,30 +14,34 @@ enum class SolverType
     Secant
 };
 
-using FunctionType = std::function<double(double)>;
+using FunctionType = std::function<double (double)>;
 
+// Parameters passed to the solvers
 struct OptionsType
 {
+    // Tolerance
     double tol;
 
-    double tola; // Secant, Newton
+    // Absolute tolerance (needed for Secant and Newton only)
+    double tola; 
 
-    double h; // Netwon
+    // Discretization step (needed for Netwon only)
+    double h;
 
-    /// Max. number of iterations.
+    // Maximum number of iterations
     unsigned int max_iter;
 };
 
-/// Output results.
+// Output results
 struct ResultType
 {
-    /// Solution.
+    // Solution (approximated zero)
     double solution = std::numeric_limits<double>::quiet_NaN();
 
-    /// Iteration counter.
+    // Number of iterations
     unsigned int iteration = 0;
 
-    /// Convergence flag. True if convergence is reached
+    // Convergence status (true if convergence is reached)
     bool converged = false;
 };
 

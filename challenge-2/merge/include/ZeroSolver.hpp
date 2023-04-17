@@ -1,16 +1,11 @@
-#include <iostream>
-#include <functional>
-#include <type_traits>
-#include <string>
-#include <memory>
-
-#include "SolverTraits.hpp"
-#include "Derivatives.hpp"
-
-
 #ifndef ZEROSOLVER_HPP
 #define ZEROSOLVER_HPP
 
+#include <iostream>
+#include <functional>
+
+#include "SolverTraits.hpp"
+#include "Derivatives.hpp"
 
 class SolverBase: public SolverTraits {
 
@@ -22,13 +17,26 @@ protected:
     ResultType m_result;
 
 public:
+
     SolverBase(FunctionType f, double a, double b): m_f(f), m_a(a), m_b(b) {}
 
-    virtual ResultType solve () = 0;
+    virtual ResultType solve() = 0;
 
     void set_interval(double a, double b) {
         m_a = a;
         m_b = b;
+    }
+
+    void set_tol(double tol) {
+        m_options.tol = tol;
+    }
+
+    void set_tola(double tola) {
+        m_options.tola = tola;
+    }
+
+    void set_max_iter(double max_iter) {
+        m_options.max_iter = max_iter;
     }
 
     ResultType get_result() const {
@@ -36,7 +44,7 @@ public:
     }
 
     void print_result() const {
-        std::cout << "Zero: " << m_result.solution << std::endl;
+        std::cout << "Solution (approximated zero): " << m_result.solution << std::endl;
 	    std::cout << "Convergence status: " << (m_result.converged ? "converged" : "not converged") << std::endl;
 	    std::cout << "Number of iterations: " << m_result.iteration << std::endl;
         std::cout << std::endl;
@@ -44,22 +52,20 @@ public:
 
 };
 
-
 ////////////////////////////////////////////////////////////////////////////
 
 class Bisection: public SolverBase {
 
 public:
 
-    ResultType solve() override;
-
-    Bisection(FunctionType f, double a, double b, double tol=1.e-5, unsigned int maxIt=150): SolverBase(f, a, b) {
+    Bisection(FunctionType f, double a, double b, double tol=1.e-5, unsigned int max_iter=150): SolverBase(f, a, b) {
         m_options.tol = tol;
-        m_options.max_iter = maxIt;
+        m_options.max_iter = max_iter;
     }
 
-};
+    ResultType solve() override;
 
+};
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -70,20 +76,19 @@ private:
     
 public:
 
-    ResultType solve() override;
-
-    QuasiNewton(FunctionType f, double a, double b, double tol=1.e-5, double tola=1.e-10, unsigned int maxIt=150, double h=1e-4): 
+    QuasiNewton(FunctionType f, double a, double b, double tol=1.e-5, double tola=1.e-10, unsigned int max_iter=150, double h=1e-4): 
     SolverBase(f, a, b) {
         m_options.tol = tol;
         m_options.tola = tola;
-        m_options.max_iter = maxIt;
+        m_options.max_iter = max_iter;
         m_options.h = h;
 
         m_Df = apsc::makeCenteredDerivative<1>(m_f, m_options.h);
     }
 
-};
+    ResultType solve() override;
 
+};
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -91,20 +96,15 @@ class Secant: public SolverBase {
 
 public:
 
-    ResultType solve() override;
-
-    Secant(FunctionType f, double a, double b, double tol=1.e-4, double tola=1.e-10, unsigned int maxIt=150): 
+    Secant(FunctionType f, double a, double b, double tol=1.e-4, double tola=1.e-10, unsigned int max_iter=150): 
     SolverBase(f, a, b) {
         m_options.tol = tol;
         m_options.tola = tola;
-        m_options.max_iter = maxIt;
+        m_options.max_iter = max_iter;
     }
+
+    ResultType solve() override;
 
 };
 
-
-#endif //ZEROSOLVER_HPP
-
-
-
-
+#endif /* ZEROSOLVER_HPP */

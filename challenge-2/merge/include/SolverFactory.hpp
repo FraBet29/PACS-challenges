@@ -1,7 +1,9 @@
-#include "ZeroSolver.hpp"
-
 #ifndef SOLVERFACTORY_HPP
 #define SOLVERFACTORY_HPP
+
+#include <utility>
+
+#include "ZeroSolver.hpp"
 
 template<SolverTraits::SolverType type, class... Args>
 std::unique_ptr<SolverBase> SolverFactory(Args&&... args) {
@@ -19,8 +21,6 @@ std::unique_ptr<SolverBase> SolverFactory(Args&&... args) {
         return nullptr;
 
 }
-
-
 
 /*
 struct SolverFactory {
