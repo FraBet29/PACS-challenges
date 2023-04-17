@@ -6,14 +6,6 @@
 #include <iostream>
 #include <string>
 
-void SolverBase::printFullResultCommon() const {
-
-	std::cout << "Zero: " << m_result.zero << std::endl;
-	std::cout << "Convergence status: " << (m_result.conv_status ? "converged" : "not converged") << std::endl;
-	std::cout << "Number of iterations: " << m_result.n_it << std::endl;
-    std::cout << std::endl;
-}
-
 SolverTraits::FullResultType QuasiNewton::solve() {
 
 	SolverTraits::ResultType a = m_a;
@@ -42,7 +34,10 @@ SolverTraits::FullResultType QuasiNewton::solve() {
 void QuasiNewton::printFullResult() const {
 
     std::cout << "--- Quasi-Newton ---" << std::endl;
-    printFullResultCommon();
+    std::cout << "Zero: " << m_result.zero << std::endl;
+	std::cout << "Convergence status: " << (m_result.conv_status ? "converged" : "not converged") << std::endl;
+	std::cout << "Number of iterations: " << m_result.n_it << std::endl;
+    std::cout << std::endl;
 }
 
 SolverTraits::FullResultType Bisection::solve() {
@@ -86,7 +81,10 @@ SolverTraits::FullResultType Bisection::solve() {
 void Bisection::printFullResult() const {
 
     std::cout << "--- Bisection ---" << std::endl;
-    printFullResultCommon();
+    std::cout << "Zero: " << m_result.zero << std::endl;
+	std::cout << "Convergence status: " << (m_result.conv_status ? "converged" : "not converged") << std::endl;
+	std::cout << "Number of iterations: " << m_result.n_it << std::endl;
+    std::cout << std::endl;
 }
 
 SolverTraits::FullResultType Secant::solve() {
@@ -122,5 +120,8 @@ SolverTraits::FullResultType Secant::solve() {
 void Secant::printFullResult() const {
 
     std::cout << "--- Secant ---" << std::endl;
-    printFullResultCommon();
+    std::cout << "Zero: " << m_result.zero << std::endl;
+	std::cout << "Convergence status: " << (m_result.conv_status ? "converged" : "not converged") << std::endl;
+	std::cout << "Number of iterations: " << m_result.n_it << std::endl;
+    std::cout << std::endl;
 }

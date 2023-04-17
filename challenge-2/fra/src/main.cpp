@@ -19,23 +19,27 @@ int main() {
 		1., // 2nd end of the initial interval (needed only for Bisection and Secant)
 	};
 
-	/*
-	auto qn = SolverFactory(SolverTraits::SolverName::QuasiNewton, data.f, data.a); // the derivative is computed automatically by the solver
-	auto bis = SolverFactory(SolverTraits::SolverName::Bisection, data.f, data.a, data.b);
-	auto sec = SolverFactory(SolverTraits::SolverName::Secant, data.f, data.a, data.b);
+	auto qn = SolverFactory();
+	auto pqn = qn(data.solver_name, data.f, data.a);
+	pqn->solve();
+	pqn->printFullResult();
+	
+	//auto qn = SolverFactory(data.solver_name, data.f, data.a); // the derivative is computed automatically by the solver
+	//auto bis = SolverFactory(data.solver_name, data.f, data.a, data.b);
+	//auto sec = SolverFactory(data.solver_name, data.f, data.a, data.b);
 
-	qn->solve();
-	bis->solve();
-	sec->solve();
+	//qn->solve();
+	//bis->solve();
+	//sec->solve();
 
 	std::cout << "Zero exact: " << - std::log(2) / std::numbers::pi << std::endl;
 	std::cout << std::endl;
 
-	qn->printFullResult();
-	bis->printFullResult();
-	sec->printFullResult();
-	*/
+	//qn->printFullResult();
+	//bis->printFullResult();
+	//sec->printFullResult();
 
+	/*
 	auto qn = QuasiNewton(data.f, data.a); // the derivative is computed automatically by the solver
 	auto bis = Bisection(data.f, data.a, data.b);
 	auto sec = Secant(data.f, data.a, data.b);
@@ -50,6 +54,7 @@ int main() {
 	qn.printFullResult();
 	bis.printFullResult();
 	sec.printFullResult();
+	*/
 
 	return 0;
 }
