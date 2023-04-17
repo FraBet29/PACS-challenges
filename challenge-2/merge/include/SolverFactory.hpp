@@ -1,6 +1,7 @@
 #ifndef SOLVERFACTORY_HPP
 #define SOLVERFACTORY_HPP
 
+#include <memory>
 #include <utility>
 
 #include "ZeroSolver.hpp"
