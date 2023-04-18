@@ -16,7 +16,10 @@ std::unique_ptr<SolverBase> SolverFactory(Args&&... args) {
         return std::make_unique<Bisection>(std::forward<Args>(args)...);
                     
     else if constexpr(type == SolverTraits::SolverType::Secant)
-        return std::make_unique<Secant>(std::forward<Args>(args)...); 
+        return std::make_unique<Secant>(std::forward<Args>(args)...);
+
+    else if constexpr(type == SolverTraits::SolverType::Brent)
+        return std::make_unique<Brent>(std::forward<Args>(args)...);
         
     else
         return nullptr;
@@ -33,6 +36,8 @@ struct SolverFactory {
             return std::make_unique<Bisection>(std::forward<Args>(args)...);
           else if(id=="Secant")
             return std::make_unique<Secant>(std::forward<Args>(args)...);
+          else if(id=="Brent")
+            return std::make_unique<Brent>(std::forward<Args>(args)...);
           else
             return nullptr;
     }

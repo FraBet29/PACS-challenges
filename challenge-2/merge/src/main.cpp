@@ -34,6 +34,21 @@ int main() {
 	std::cout << "Bisection" << std::endl;
 	bisection_ptr->print_result();
 
+	auto brent_ptr = SolverFactory<SolverTraits::SolverType::Brent>(data.f, data.a, data.b);
+	brent_ptr->solve();
+	std::cout << "Brent" << std::endl;
+	brent_ptr->print_result();
+
+	brent_ptr->tol() = 1.e-7;
+	brent_ptr->solve();
+	std::cout << "Brent" << std::endl;
+	brent_ptr->print_result();
+
+	brent_ptr->set_interval(0., 1.);
+	brent_ptr->solve();
+	std::cout << "Brent" << std::endl;
+	brent_ptr->print_result();
+
 	std::cout << "Zero exact: " << - std::log(2) / std::numbers::pi << std::endl;
 	std::cout << std::endl;
 

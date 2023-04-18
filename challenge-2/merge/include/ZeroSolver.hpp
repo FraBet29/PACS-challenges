@@ -10,38 +10,32 @@
 class SolverBase: public SolverTraits {
 
 protected:
+
+    void bracketInterval(SolverTraits::FunctionType const &f, double x1, double h=0.01, unsigned int maxIter=200);
+
     FunctionType m_f;
     double m_a;
     double m_b;
+    bool m_zero_exists;
     OptionsType m_options;
     ResultType m_result;
-
+    
 public:
 
     SolverBase(FunctionType f, double a, double b): m_f(f), m_a(a), m_b(b) {}
 
     virtual ResultType solve() = 0;
 
+    // Setters for the method options
     void set_interval(double a, double b) {
         m_a = a;
         m_b = b;
     }
+    double & tol() { return m_options.tol; }
+    double & tola() { return m_options.tola; }
+    unsigned int & max_iter() { return m_options.max_iter; }
 
-    void set_tol(double tol) {
-        m_options.tol = tol;
-    }
-
-    void set_tola(double tola) {
-        m_options.tola = tola;
-    }
-
-    void set_max_iter(double max_iter) {
-        m_options.max_iter = max_iter;
-    }
-
-    ResultType get_result() const {
-        return m_result;
-    }
+    ResultType get_result() const { return m_result; }
 
     void print_result() const {
         std::cout << "Solution (approximated zero): " << m_result.solution << std::endl;
@@ -59,6 +53,7 @@ class Bisection: public SolverBase {
 public:
 
     Bisection(FunctionType f, double a, double b, double tol=1.e-5, unsigned int max_iter=150): SolverBase(f, a, b) {
+        bracketInterval(f, a);
         m_options.tol = tol;
         m_options.max_iter = max_iter;
     }
@@ -76,14 +71,13 @@ private:
     
 public:
 
-    QuasiNewton(FunctionType f, double a, double b, double tol=1.e-5, double tola=1.e-10, unsigned int max_iter=150, double h=1e-4): 
+    QuasiNewton(FunctionType f, double a, double b, double tol=1.e-5, double tola=1.e-10, unsigned int max_iter=150): 
     SolverBase(f, a, b) {
         m_options.tol = tol;
         m_options.tola = tola;
         m_options.max_iter = max_iter;
-        m_options.h = h;
 
-        m_Df = apsc::makeCenteredDerivative<1>(m_f, m_options.h);
+        m_Df = apsc::makeCenteredDerivative<1>(m_f, tol);
     }
 
     ResultType solve() override;
@@ -100,6 +94,22 @@ public:
     SolverBase(f, a, b) {
         m_options.tol = tol;
         m_options.tola = tola;
+        m_options.max_iter = max_iter;
+    }
+
+    ResultType solve() override;
+
+};
+
+////////////////////////////////////////////////////////////////////////////
+
+class Brent: public SolverBase {
+
+public:
+
+    Brent(FunctionType f, double a, double b, double tol=1.e-5, unsigned int max_iter=200): SolverBase(f, a, b) {
+        bracketInterval(f, a);
+        m_options.tol = tol;
         m_options.max_iter = max_iter;
     }
 

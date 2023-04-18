@@ -11,7 +11,8 @@ enum class SolverType
 {
     QuasiNewton,
     Bisection,
-    Secant
+    Secant,
+    Brent
 };
 
 using FunctionType = std::function<double (double)>;
@@ -23,10 +24,7 @@ struct OptionsType
     double tol;
 
     // Absolute tolerance (needed for Secant and Newton only)
-    double tola; 
-
-    // Discretization step (needed for Netwon only)
-    double h;
+    double tola;
 
     // Maximum number of iterations
     unsigned int max_iter;
