@@ -55,8 +55,7 @@ int main() {
 	std::cout << "Brent" << std::endl;
 	brent_ptr->print_result();
 
-
-	// Print the exact solution (It can be computed analitically)
+	// Print the exact solution (it can be computed analitically)
 	std::cout << "Exact zero: " << - std::log(2) / std::numbers::pi << std::endl;
 	std::cout << std::endl;
 
