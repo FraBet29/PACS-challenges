@@ -22,12 +22,12 @@ The template function ```SolverFactory``` in ```SolverFactory.hpp``` allows the 
 
 ## Compile and execute
 
-Compile: make
+Compile: ```make```
 
-Execute: ./main
+Execute: ```./main```
 
 Output: the results of some tests defined in the main are printed in the terminal
 
-Remove the object files: make clean
+Remove the object files: ```make clean```
 
-Remove the object files and the executable: make distclean
+Remove the object files and the executable: ```make distclean```
