@@ -7,47 +7,37 @@
 #include "../include/ZeroSolver.hpp"
 
 /*!
- * This function tries to find an interval that brackets the zero of a
- * function f. It does so by sampling the value of f at points
- * generated starting from a given point
+ * This function tries to find an interval that brackets the zero of a function f. 
+ * It does so by sampling the value of f at points generated starting from a given point.
  *
- * @tparam Function the type of the function. must be convertible to double
- * (*)(double)
- * @param f The function.
- * @param x1 initial point
- * @param h initial increment for the sampling
- * @param maxIter maximum number of iterations
- * @return a tuple with the bracketing points and a bool which is true if number
- * of iterations not exceeded (bracket found)
- * @note I am adopting a simple algorithm. The search can be bettered using a
- * quadratic (or cubic) search.
+ * @param f Function
+ * @param x1 Initial point
+ * @param h Initial increment for the sampling
+ * @param maxIter Maximum number of iterations
  */
-void SolverBase::bracketInterval(SolverTraits::FunctionType const &f, double x1, double h, unsigned int maxIter)
-{
-  constexpr double expandFactor = 1.5;
-  h = std::abs(h);
-  // auto          hinit = h;
-  auto         direction = 1.0;
-  auto         x2 = x1 + h;
-  auto         y1 = f(x1);
-  auto         y2 = f(x2);
-  unsigned int iter = 0u;
-  // get initial decrement direction
-  while((y1 * y2 > 0) && (iter < maxIter))
-    {
-      ++iter;
-      if(std::abs(y2) > std::abs(y1))
-        {
-          std::swap(y1, y2);
-          std::swap(x1, x2);
-          // change direction
+void SolverBase::bracketInterval(SolverTraits::FunctionType const &f, double x1, double h, unsigned int maxIter) {
+
+    constexpr double expandFactor = 1.5;
+    h = std::abs(h);
+    auto direction = 1.0;
+    auto x2 = x1 + h;
+    auto y1 = f(x1);
+    auto y2 = f(x2);
+    unsigned int iter = 0u;
+    
+    // Get initial decrement direction
+    while((y1 * y2 > 0) && (iter < maxIter)) {
+        ++iter;
+        if(std::abs(y2) > std::abs(y1)) { // change direction
+            std::swap(y1, y2);
+            std::swap(x1, x2);
         }
-      direction = (x2 > x1) ? 1.0 : -1.0;
-      x1 = x2;
-      y1 = y2;
-      x2 += direction * h;
-      y2 = f(x2);
-      h *= expandFactor;
+        direction = (x2 > x1) ? 1.0 : -1.0;
+        x1 = x2;
+        y1 = y2;
+        x2 += direction * h;
+        y2 = f(x2);
+        h *= expandFactor;
     }
 
     if ((iter < maxIter) && (m_a > x1 || m_b < x2)) {
@@ -57,7 +47,7 @@ void SolverBase::bracketInterval(SolverTraits::FunctionType const &f, double x1,
 
 SolverTraits::ResultType Bisection::solve() {
 
-    // check if the interval does include a zero
+    // Check if the interval does include a zero
     bracketInterval(m_f, m_a);
 
     double a = m_a;
@@ -158,6 +148,7 @@ SolverTraits::ResultType Secant::solve() {
 
 SolverTraits::ResultType Brent::solve() {
 
+    // Check if the interval does include a zero
     bracketInterval(m_f, m_a);
 
     double a = m_a;

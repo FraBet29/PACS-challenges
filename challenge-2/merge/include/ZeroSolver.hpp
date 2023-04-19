@@ -13,20 +13,19 @@ protected:
 
     void bracketInterval(SolverTraits::FunctionType const &f, double x1, double h=0.01, unsigned int maxIter=200);
 
-    FunctionType m_f;
-    double m_a;
-    double m_b;
-    bool m_zero_exists;
-    OptionsType m_options;
-    ResultType m_result;
+    FunctionType m_f; // function
+    double m_a; // 1st end of the initial interval
+    double m_b; // 2nd end of the initial interval (needed for Bisection and Secant only)
+    OptionsType m_options; // struct containing the parameters of the chosen method
+    ResultType m_result; // struct containing the approximated zero, the convergence status and the number of iterations
     
 public:
 
     SolverBase(FunctionType f, double a, double b): m_f(f), m_a(a), m_b(b) {} // abstract constructor
 
-    virtual ResultType solve() = 0; //pure virtual function 
+    virtual ResultType solve() = 0; // pure virtual function 
 
-    // Getters and Setters for the method options
+    // Getters and setters for the method options
     void set_interval(double a, double b) {
         m_a = a;
         m_b = b;
@@ -37,7 +36,6 @@ public:
     unsigned int & max_iter() { return m_options.max_iter; }
 
     ResultType get_result() const { return m_result; }
-
 
     void print_result() const {
         std::cout << "Solution (approximated zero): " << m_result.solution << std::endl;
