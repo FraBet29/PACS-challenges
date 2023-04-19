@@ -57,6 +57,7 @@ void SolverBase::bracketInterval(SolverTraits::FunctionType const &f, double x1,
 
 SolverTraits::ResultType Bisection::solve() {
 
+    // check if the interval does include a zero
     bracketInterval(m_f, m_a);
 
     double a = m_a;

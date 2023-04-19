@@ -6,6 +6,8 @@
 
 #include "ZeroSolver.hpp"
 
+// This factory returns a unique_ptr to an object whose type is passed as template parameter
+
 template<SolverTraits::SolverType type, class... Args>
 std::unique_ptr<SolverBase> SolverFactory(Args&&... args) {
 

@@ -22,20 +22,22 @@ protected:
     
 public:
 
-    SolverBase(FunctionType f, double a, double b): m_f(f), m_a(a), m_b(b) {}
+    SolverBase(FunctionType f, double a, double b): m_f(f), m_a(a), m_b(b) {} // abstract constructor
 
-    virtual ResultType solve() = 0;
+    virtual ResultType solve() = 0; //pure virtual function 
 
-    // Setters for the method options
+    // Getters and Setters for the method options
     void set_interval(double a, double b) {
         m_a = a;
         m_b = b;
     }
+
     double & tol() { return m_options.tol; }
     double & tola() { return m_options.tola; }
     unsigned int & max_iter() { return m_options.max_iter; }
 
     ResultType get_result() const { return m_result; }
+
 
     void print_result() const {
         std::cout << "Solution (approximated zero): " << m_result.solution << std::endl;
